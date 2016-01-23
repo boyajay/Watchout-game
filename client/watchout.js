@@ -1,8 +1,8 @@
 // start slingin' some d3 here.
 var board = {
-  height: 450,
-  width: 700,
-  nEnemies: 20,
+  height: 600,
+  width: 900,
+  nEnemies: 12,
   padding: "15px"
 };
 
@@ -14,7 +14,7 @@ var enemiesData;
 function randomize () {
 
   enemiesData = [];
-  for (var i = 0; i < 20; i++) {
+  for (var i = 0; i < 12; i++) {
     var enemy = {};
     enemy.x = randomX();
     enemy.y = randomY();
@@ -29,32 +29,35 @@ var svgBoard = d3.select('.board')
 
 randomize();
 var createEnemies = svgBoard
-                .selectAll('circle')
+                .selectAll('image')
                 .data(enemiesData)
                 .enter()
-                .append('circle')
+                .append('image')
                 .attr('class', 'enemy')
-                .attr('cx', function(d){ return d.x;})
-                .attr('cy', function(d){return d.y;})
-                .attr('r', 18)
+                .attr('x', function(d){ return d.x;})
+                .attr('y', function(d){return d.y;})
+                .attr('height', 55)
+                .attr('width', 55)
+                .attr("xlink:href", "tie.png")
                 .on('mouseover', function(){console.log('hi');});
 
 var drag = d3.behavior.drag()
               .on('drag', function() {
-                heroChar.attr("cx", d3.event.x)
-                .attr("cy", d3.event.y);
+                heroChar.attr("x", d3.event.x)
+                .attr("y", d3.event.y);
               });
 
 
 var heroChar = svgBoard.selectAll('.hero')
         .data([{x: 375, y: 225}])
         .enter()
-        .append('circle')
+        .append('image')
         .attr('class', 'hero')
-        .attr('cx', 375)
-        .attr('cy', 225)
-        .attr('r', 20)
-        .attr('fill', 'url(hero.png)')
+        .attr('x', 375)
+        .attr('y', 225)
+        .attr('height', 55)
+        .attr('width', 55)
+        .attr("xlink:href", "hero.png")
         .call(drag);
 
 
@@ -69,9 +72,9 @@ window.setInterval(function(){
   randomize();
   d3.select('.board').selectAll('.enemy')
     .transition()
-    .attr("cx" , function(){return Math.random()*(board.width - 35);})
+    .attr("x" , function(){return Math.random()*(board.width - 35);})
     .duration(1000)
-    .attr("cy" , function(){return Math.random()*(board.height-35);})
+    .attr("y" , function(){return Math.random()*(board.height-35);})
     .duration(1000);
 
 }, 1000);

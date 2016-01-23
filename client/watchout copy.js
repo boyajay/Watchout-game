@@ -63,7 +63,7 @@ window.setInterval(function(){
   randomize();
   d3.select('.board').selectAll('.enemy')
     .transition()
-    .attr("cx" , function(){return Math.random()*(board.width - 35);})
+    .attr("cx" , function(){return Math.random()*(board.width-35);})
     .duration(1000)
     .attr("cy" , function(){return Math.random()*(board.height-35);})
     .duration(1000);
