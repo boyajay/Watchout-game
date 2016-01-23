@@ -6,15 +6,15 @@ var board = {
   padding: "15px"
 };
 
-function randomX (){ return (Math.random()*(board.width - 35));}
-function randomY (){ return (Math.random()*(board.height-35));}
+function randomX (){ return (Math.floor(Math.random()*(board.width - 35)));}
+function randomY (){ return (Math.floor(Math.random()*(board.height-35)));}
 
 var enemiesData;
 
 function randomize () {
 
   enemiesData = [];
-  for (var i = 0; i < board.nEnemies; i++) {
+  for (var i = 0; i < 20; i++) {
     var enemy = {};
     enemy.x = randomX();
     enemy.y = randomY();
@@ -22,36 +22,42 @@ function randomize () {
   }
 }
 
-
-var heroes = {  
-};
-
-var hero = d3.select('.mouse');
-console.log("hero is " + JSON.stringify(hero));
-
-var drag = d3.behavior.drag()
-  .on('drag', function() {
-  hero.style("left", d.x=d3.event.x)
-  .style("top", d.y=d3.event.y);
-  });
-
-
-d3.select('.mouse')
-          .style('left', function(d){return d.x})
-          .style('top', function(d){return d.y})
-          .call(drag);
-
+var svgBoard = d3.select('.board')
+              .append('svg')
+              .attr('width', 750)
+              .attr('height', 450);
 
 randomize();
-var createEnemies = d3.select('.board')
-                .selectAll('.enemy')
+var createEnemies = svgBoard
+                .selectAll('circle')
                 .data(enemiesData)
                 .enter()
-                .append('svg')
+                .append('circle')
                 .attr('class', 'enemy')
-                .style("left" , function(d){return d.x})
-                .style("top" , function(d){return d.y})
+                .attr('cx', function(d){ return d.x;})
+                .attr('cy', function(d){return d.y;})
+                .attr('r', 18)
                 .on('mouseover', function(){console.log('hi');});
+
+var drag = d3.behavior.drag()
+              .on('drag', function() {
+                heroChar.attr("cx", d3.event.x)
+                .attr("cy", d3.event.y);
+              });
+
+
+var heroChar = svgBoard.selectAll('.hero')
+        .data([{x: 375, y: 225}])
+        .enter()
+        .append('circle')
+        .attr('class', 'hero')
+        .attr('cx', 375)
+        .attr('cy', 225)
+        .attr('r', 20)
+        .attr('fill', 'url(hero.png)')
+        .call(drag);
+
+
 
 
 
@@ -63,9 +69,9 @@ window.setInterval(function(){
   randomize();
   d3.select('.board').selectAll('.enemy')
     .transition()
-    .style("left" , function(){return Math.random()*(board.width - 35);})
+    .attr("cx" , function(){return Math.random()*(board.width - 35);})
     .duration(1000)
-    .style("top" , function(){return Math.random()*(board.height-35);})
+    .attr("cy" , function(){return Math.random()*(board.height-35);})
     .duration(1000);
 
 }, 1000);
