@@ -47,6 +47,7 @@ var Collision = function(){
   var collided = false;
   var userX = d3.selectAll(".hero").attr("x");
   var userY = d3.selectAll(".hero").attr("y");
+
   d3.selectAll('.enemy').each(function(d,i) {
     var enemy = d3.select(this);
     var enemyX = enemy.attr("x");
@@ -62,7 +63,7 @@ var Collision = function(){
   });
   return collided;
 };
-var checkCollision = throttle(Collision, 200);
+var checkCollision = throttle(Collision, 300);
 
 var updateScore =function(){
     if (gameStats[0].score > gameStats[0].highscore) {
@@ -104,9 +105,9 @@ var createEnemies = svgBoard
                 .data(enemiesData)
                 .enter()
                 .append('image')
-                .attr('class', 'enemy')
                 .attr('x', function(d){ return d.x;})
                 .attr('y', function(d){return d.y;})
+                .attr('class', 'enemy')
                 .attr('height', 55)
                 .attr('width', 55)
                 .attr("xlink:href", "tie.png");
