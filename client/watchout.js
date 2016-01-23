@@ -86,11 +86,11 @@ var svgBoard = d3.select('.board')
               .attr('height', 450);
 var drag = d3.behavior.drag()
               .on('drag', function() {
-                heroChar.attr("x", d3.event.x)
-                .attr("y", d3.event.y);
+                heroChar.attr("x", Math.max(0, Math.min(d3.event.x, 845)))
+                .attr("y", Math.max(0, Math.min(d3.event.y, 545)));
               });
 var heroChar = svgBoard.selectAll('.hero')
-        .data([{x: 375, y: 225}])
+        .data([{x: 450, y: 300}])
         .enter()
         .append('image')
         .attr('class', 'hero')
