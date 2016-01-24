@@ -87,17 +87,20 @@ var svgBoard = d3.select('.board')
 var drag = d3.behavior.drag()
               .on('drag', function() {
                 heroChar.attr("x", Math.max(0, Math.min(d3.event.x, 845)))
-                .attr("y", Math.max(0, Math.min(d3.event.y, 545)));
+                .attr("y", Math.max(0, Math.min(d3.event.y, 545)))
+                .style("transform", "rotate("+ ((Math.atan2(d3.event.dy, d3.event.dx))/(Math.PI)*180+270) + "deg)")
+                .style("transform-origin", "50% 50%");
               });
 var heroChar = svgBoard.selectAll('.hero')
         .data([{x: 450, y: 300}])
         .enter()
         .append('image')
         .attr('class', 'hero')
-        .attr('x', 375)
-        .attr('y', 225)
+        .attr('x', 423)
+        .attr('y', 273)
         .attr('height', 55)
         .attr('width', 55)
+        .attr('angle', 0)
         .attr("xlink:href", "hero.png")
         .call(drag);
 var createEnemies = svgBoard
