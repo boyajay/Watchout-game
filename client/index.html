@@ -3,25 +3,36 @@
   <head>
     <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
     <link rel='stylesheet' type='css' href='styles.css'>
+    <div class=".row">
+      <audio controls autoplay loop class ="pull-right">
+        <source src="http://vignette1.wikia.nocookie.net/starwars/images/6/6a/MainTitle.ogg" type="audio/ogg">
+        <!-- <source src="audio/intro.mp3" type="audio/mpeg"> -->
+        Your browser does not support the audio element.
+      </audio>
+      <br>
+    </div>
   </head>
   <body>
     <div class ="container">
       <div class="toprow row">
-        <div class="title col-md-9 text-center">W A T C H &nbsp; &nbsp;O U T !</div>
+        <div class="title col-md-9 text-center">ROGUE SQUADRON SURVIVAL</div>
         <div class="scoreboard col-md-3 text-right">
           <!-- Modify the scoreboard when important events occur in your game! -->
-          <div class="highscore">High score: <span>0s</span></div>
-          <div class="current">Current score: <span>0s</span></div>
+          <div class="highscore">High score: <span>0 points</span></div>
+          <div class="current">Current score: <span>0 points</span></div>
           <div class="collisions">Collisions: <span>0</span></div>
         </div>
       </div>
-    <div class="row">
-      <div class="board"><div class="mouse"></div></div>
+      <div class="row">
+        <div class="board"><div class="mouse"></div></div>
+        </div>
+      <div class = "instructions row">
+      <span> CLICK HERE TO BEGIN!</span> <br> Click and drag the X-Wing <br>Avoid all of the Tie Fighters!
+      </div>
     </div>
-    </div>
-
     <script src="lib/d3.js" charset="utf-8"></script>
+    <script src='https://code.jquery.com/jquery-2.2.0.min.js'></script>
     <script src='watchout.js'></script>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-7s5uDGW3AHqw6xtJmNNtr+OBRJUlgkNJEo78P4b0yRw= sha512-nNo+yCHEyn0smMxSswnf/OnX6/KwJuZTlNZBjauKhTK0c+zT+q5JOCx0UFhXQ6rJR9jg6Es8gPuD2uZcYDLqSw==" crossorigin="anonymous">
+    <link rel="stylesheet" type='css' href="lib/bootstrap.min.css">
   </body>
 </html>
