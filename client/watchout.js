@@ -1,8 +1,7 @@
 // start slingin' some d3 here.
 var board = {
-  height: 600,
-  width: 900,
-  nEnemies: 12,
+  height: 500,
+  width: 800,
   padding: "15px"
 };
 
@@ -18,11 +17,10 @@ var collisionCount = d3.select('.collisions');
 var enemiesData;
 
 function randomX (){ return (Math.floor(Math.random()*(board.width - 35)));}
-function randomY (){ return (Math.floor(Math.random()*(board.height-35)));}
+function randomY (){ return (Math.floor(Math.random()*(board.height- 35)));}
 function randomize () {
-
   enemiesData = [];
-  for (var i = 0; i < 20; i++) {
+  for (var i = 0; i < 12; i++) {
     var enemy = {};
     enemy.x = randomX();
     enemy.y = randomY();
@@ -43,11 +41,16 @@ var throttle = function(func, wait){
     }
   };
 };
-var Collision = function(){
+function collisionIncrement(){
+  collisions++;
+  $('body').css({"background-color": "#660000"});
+  setTimeout(function(){$('body').css({"background-color": "#ebebe0"});}, 200);
+};
+var throttledCollision = throttle(collisionIncrement, 1000);
+var checkCollisions = function(){
   var collided = false;
   var userX = d3.selectAll(".hero").attr("x");
   var userY = d3.selectAll(".hero").attr("y");
-
   d3.selectAll('.enemy').each(function(d,i) {
     var enemy = d3.select(this);
     var enemyX = enemy.attr("x");
@@ -56,14 +59,14 @@ var Collision = function(){
     if (distance < 45) {
       collided = true;
       updateScore();
-      collisions++;
+      throttledCollision();
       collisionCount.select('span')
       .text(collisions);
     }
   });
   return collided;
 };
-var checkCollision = throttle(Collision, 300);
+
 
 var updateScore =function(){
     if (gameStats[0].score > gameStats[0].highscore) {
@@ -78,31 +81,12 @@ var updateScore =function(){
             .text(function(d) {return d.highscore + "s";});
 };
 
-randomize();
-
 var svgBoard = d3.select('.board')
               .append('svg')
               .attr('width', 750)
               .attr('height', 450);
-var drag = d3.behavior.drag()
-              .on('drag', function() {
-                heroChar.attr("x", Math.max(0, Math.min(d3.event.x, 845)))
-                .attr("y", Math.max(0, Math.min(d3.event.y, 545)))
-                .style("transform", "rotate("+ ((Math.atan2(d3.event.dy, d3.event.dx))/(Math.PI)*180+270) + "deg)")
-                .style("transform-origin", "50% 50%");
-              });
-var heroChar = svgBoard.selectAll('.hero')
-        .data([{x: 450, y: 300}])
-        .enter()
-        .append('image')
-        .attr('class', 'hero')
-        .attr('x', 423)
-        .attr('y', 273)
-        .attr('height', 55)
-        .attr('width', 55)
-        .attr('angle', 0)
-        .attr("xlink:href", "hero.png")
-        .call(drag);
+
+randomize();
 var createEnemies = svgBoard
                 .selectAll('image')
                 .data(enemiesData)
@@ -113,23 +97,53 @@ var createEnemies = svgBoard
                 .attr('class', 'enemy')
                 .attr('height', 55)
                 .attr('width', 55)
-                .attr("xlink:href", "tie.png");
+                .attr("xlink:href", "imgs/tie.png");
 
-window.setInterval(function(){
-  var currentData = d3.select('.board').selectAll('.enemy')
-    .data(enemiesData);
-  randomize();
-  d3.select('.board').selectAll('.enemy')
-    .data(enemiesData)
-    .transition()
-    .duration(1500)
-    .attr('x', function(d){return d.x;})
-    .attr('y', function(d){return d.y;});
+$(document).ready(function() {
+  $('.instructions').on('click', function(){
+    $('.instructions').css('visibility', 'hidden'); starting();});
+});
+
+function starting (){
+  var drag = d3.behavior.drag()
+              .on('drag', function() {
+                heroChar.attr("x", Math.max(0, Math.min(d3.event.x, 745)))
+                .attr("y", Math.max(0, Math.min(d3.event.y, 445)))
+                .style("transform", "rotate("+ ((Math.atan2(d3.event.dy, d3.event.dx))/(Math.PI)*180+270) + "deg)")
+                .style("transform-origin", "50% 50%");
+                //.style('visibility', 'hidden');
+              });
+  var heroChar = svgBoard.selectAll('.hero')
+        .data([{x: 450, y: 300}])
+        .enter()
+        .append('image')
+        .attr('class', 'hero')
+        .attr('x', 370)
+        .attr('y', 220)
+        .attr('height', 55)
+        .attr('width', 55)
+        .attr('angle', 0)
+        .attr("xlink:href", "imgs/hero.png")
+        // .call(startgame)
+        .call(drag);
+  window.setInterval(function(){
+    var currentData = d3.select('.board').selectAll('.enemy')
+      .data(enemiesData);
+    randomize();
+    d3.select('.board').selectAll('.enemy')
+      .data(enemiesData)
+      .transition()
+      .duration(2200)
+      .attr('x', function(d){return d.x;})
+      .attr('y', function(d){return d.y;});
+      
+  }, 1600);
+  window.setInterval(function(){
     gameStats[0].score++;
-    currentScore.select('span')
-                .data(gameStats)
-                .text(function(d) {return d.score + "s";});
-}, 1500);
+      currentScore.select('span')
+                  .data(gameStats)
+                  .text(function(d) {return d.score;});
+  }, 100);
 
-window.setInterval(function(){checkCollision();}, 50);
-
+  window.setInterval(function(){checkCollisions();}, 50);
+}
