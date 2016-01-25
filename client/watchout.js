@@ -44,7 +44,7 @@ var throttle = function(func, wait){
 function collisionIncrement(){
   collisions++;
   $('body').css({"background-color": "#660000"});
-  setTimeout(function(){$('body').css({"background-color": "#ebebe0"});}, 200);
+  setTimeout(function(){$('body').css({"background-color": "#8c8c8c"});}, 350);
 };
 var throttledCollision = throttle(collisionIncrement, 1000);
 var checkCollisions = function(){
@@ -75,10 +75,10 @@ var updateScore =function(){
     gameStats[0].score = 0;
     currentScore.select('span')
                 .data(gameStats)
-                .text(function(d) {return d.score + "s";});
+                .text(function(d) {return d.score;});
     highScore.select('span')
             .data(gameStats)
-            .text(function(d) {return d.highscore + "s";});
+            .text(function(d) {return d.highscore;});
 };
 
 var svgBoard = d3.select('.board')
