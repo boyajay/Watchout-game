@@ -4,17 +4,9 @@
     <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Righteous' rel='stylesheet' type='text/css'>
     <link rel='stylesheet' type='css' href='styles.css'>
-    <div class=".row">
-      <audio controls autoplay loop class ="pull-right">
-        <source src="http://vignette1.wikia.nocookie.net/starwars/images/6/6a/MainTitle.ogg" type="audio/ogg">
-        <!-- <source src="audio/intro.mp3" type="audio/mpeg"> -->
-        Your browser does not support the audio element.
-      </audio>
-      <br>
-    </div>
   </head>
   <body>
-    <div class ="container">
+    <div class ="container relative">
       <div class="toprow row">
         <div class="title col-md-9 text-center">ROGUE SQUADRON SURVIVAL</div>
         <div class="scoreboard col-md-3 text-left">
@@ -30,6 +22,13 @@
       <div class = "instructions row">
       <span> CLICK HERE TO BEGIN!</span> <br> Click and drag the X-Wing <br>Avoid the TIE Fighters!
       </div>
+    </div>
+    <div class=".row">
+      <audio controls autoplay loop id="bgAudio">
+        <source src="http://vignette1.wikia.nocookie.net/starwars/images/6/6a/MainTitle.ogg" type="audio/ogg">
+        <!-- <source src="audio/intro.mp3" type="audio/mpeg"> -->
+        Your browser does not support the audio element.
+      </audio>
     </div>
     <script src="lib/d3.js" charset="utf-8"></script>
     <script src='https://code.jquery.com/jquery-2.2.0.min.js'></script>

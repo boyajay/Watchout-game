@@ -1,4 +1,10 @@
 // start slingin' some d3 here.
+
+window.onload = function() {
+    var backgroundAudio=document.getElementById("bgAudio");
+    backgroundAudio.volume=0.12;
+}
+
 var board = {
   height: 500,
   width: 800,
@@ -107,8 +113,8 @@ $(document).ready(function() {
 function starting (){
   var drag = d3.behavior.drag()
               .on('drag', function() {
-                heroChar.attr("x", Math.max(0, Math.min(d3.event.x, 745)))
-                .attr("y", Math.max(0, Math.min(d3.event.y, 445)))
+                heroChar.attr("x", Math.max(0, Math.min(d3.event.x-27, 745)))
+                .attr("y", Math.max(0, Math.min(d3.event.y-27, 445)))
                 .style("transform", "rotate("+ ((Math.atan2(d3.event.dy, d3.event.dx))/(Math.PI)*180+270) + "deg)")
                 .style("transform-origin", "50% 50%");
                 //.style('visibility', 'hidden');
